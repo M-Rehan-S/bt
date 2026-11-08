@@ -1,0 +1,6 @@
+build:
+	CGO_ENABLED=0 go build -o bin/tracker   ./cmd/tracker
+	CGO_ENABLED=0 go build -o bin/client    ./cmd/client
+	CGO_ENABLED=0 go build -o bin/mktorrent ./cmd/mktorrent
+test:
+	go test ./...
