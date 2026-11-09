@@ -164,3 +164,32 @@ func (d *decoder) str() (string, error) {
 	d.pos = start + n
 	return string(d.data[start : start+n]), nil
 }
+
+// DictValueSpan returns the original, unmodified bytes of the value stored
+// under key in the top-level dictionary of data.
+func DictValueSpan(data []byte, key string) ([]byte, error) {
+	d := &decoder{data: data}
+	if len(data) == 0 || data[0] != 'd' {
+		return nil, errors.New("bencode: not a dict")
+	}
+	d.pos++
+	for {
+		if d.pos >= len(d.data) {
+			return nil, errEnd
+		}
+		if d.data[d.pos] == 'e' {
+			return nil, fmt.Errorf("bencode: key %q not found", key)
+		}
+		k, err := d.str()
+		if err != nil {
+			return nil, err
+		}
+		start := d.pos
+		if _, err := d.next(); err != nil { // advances d.pos past the value
+			return nil, err
+		}
+		if k == key {
+			return data[start:d.pos], nil
+		}
+	}
+}

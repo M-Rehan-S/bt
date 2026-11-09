@@ -50,3 +50,14 @@ func TestDecodeTypes(t *testing.T) {
 		t.Errorf("got %#v", v)
 	}
 }
+
+func TestDictValueSpanPreservesBytes(t *testing.T) {
+	data := []byte("d4:infod1:bi1e1:ai2eee")
+	got, err := DictValueSpan(data, "info")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if string(got) != "d1:bi1e1:ai2ee" { // original order b, a, not re-sorted
+		t.Errorf("got %q", got)
+	}
+}
