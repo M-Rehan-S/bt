@@ -3,3 +3,4 @@ results/
 testdata/*.bin
 *.torrent
 __pycache__/
+PLAN.md
