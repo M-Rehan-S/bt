@@ -1,6 +1,6 @@
 # LOGSPEC.md: interfaces and conventions
 
-Single source of truth for CLI flags, network layout, log format and metric
+Single source of truth for CLI Flags, network layout, log format and metric
 definitions. The analysis scripts depend on this file, so update it whenever
 any of these things change.
 
